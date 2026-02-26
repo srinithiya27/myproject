@@ -1,0 +1,94 @@
+✅ STEP 2: Install AWS CLI (Fedora Linux 40)
+We’ll install AWS CLI v2 (official & recommended).
+
+🔹 STEP 2.1: Open Terminal
+Use:
+Ctrl + Alt + T
+
+🔹 STEP 2.2: Update system (safe & recommended)
+sudo dnf update -y
+If it asks for password → enter your Linux user password.
+
+🔹 STEP 2.3: Download AWS CLI installer
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+✅ This just downloads the file.
+
+🔹 STEP 2.4: Install unzip (if not installed)
+sudo dnf install unzip -y
+
+🔹 STEP 2.5: Unzip the installer
+unzip awscliv2.zip
+This creates a folder called aws.
+
+🔹 STEP 2.6: Install AWS CLI
+sudo ./aws/install
+Wait a few seconds.
+
+🔹 STEP 2.7: Verify installation
+aws --version
+✅ Expected output (example):
+aws-cli/2.x.x Python/3.x Linux/x86_64
+If you see this → AWS CLI is installed successfully 🎉
+
+🧠 What you just did (simple words)
+•	Installed AWS command-line tool
+•	This lets Terraform & you talk to AWS securely
+✅ STEP 3: Install Terraform on Fedora
+
+🔹 STEP 3.1: Download Terraform
+curl -LO https://releases.hashicorp.com/terraform/1.6.0/terraform_1.6.0_linux_amd64.zip
+
+🔹 STEP 3.2: Unzip Terraform
+sudo dnf install unzip -y   # Only if unzip not installed yet
+unzip terraform_1.6.0_linux_amd64.zip
+🔹 STEP 3.3: Move Terraform binary to PATH
+sudo mv terraform /usr/local/bin/
+🔹 STEP 3.4: Verify installation
+terraform version
+
+Terraform v1.6.0
+
+✅ STEP 4: Configure AWS Credentials for Terraform
+Terraform uses AWS credentials to deploy resources.
+🔹 STEP 4.1: Set up AWS CLI credentials
+aws configure
+
+It will ask for:
+•	AWS Access Key ID → paste from CSV
+•	AWS Secret Access Key → paste from CSV
+•	Default region name → e.g., us-east-1
+•	Default output format → json (or table)
+🔹 STEP 4.2: Verify AWS CLI
+
+aws s3 ls
+
+If it lists S3 buckets (even empty), credentials are correct.
+
+✅ STEP 5: Test Terraform AWS Provider
+
+
+mkdir terraform-demo
+cd terraform-demo
+
+ nano main.tf
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_s3_bucket" "demo_bucket" {
+  bucket = "my-terraform-demo-bucket-123456"
+  acl    = "private"
+}
+
+terraform init
+
+terraform plan
+
+terraform apply
+
+terraform show
+
+terraform destroy
+.
+
