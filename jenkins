@@ -1,0 +1,47 @@
+Open terminal and run:
+sudo dnf update -y
+👉
+ Updates all system packages.
+☕
+ STEP 2: Install Java (Required for Jenkins)
+Jenkins requires Java.
+Check if Java is installed:
+java -version
+If not installed, install OpenJDK 17:
+sudo dnf install java-17-openjdk -y
+Verify again:
+java -version
+✅
+You should see Java 17 version details.
+📦
+ STEP 3: Add Jenkins Repository
+Add Jenkins repo:
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+https://pkg.jenkins.io/redhat-stable/jenkins.repo
+Import Jenkins key:
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+📥
+ STEP 4: Install Jenkins
+sudo dnf install jenkins -y
+�
+�
+ STEP 5: Start and Enable Jenkins
+Start Jenkins:
+sudo systemctl start jenkins
+Enable at boot:
+sudo systemctl enable jenkins
+Check status:
+sudo systemctl status jenkins
+✅
+ If you see 
+active (running) → correct.
+🔥
+ STEP 6: Allow Firewall (Very Important in 
+Fedora)
+Fedora blocks port 8080 by default.
+sudo firewall-cmd --permanent --add-port=8080/tcp
+sudo firewall-cmd --reload
+🌐
+ STEP 7: Access Jenkins in Browser
+Open browser inside VM:
+http://localhost:8080
